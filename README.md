@@ -64,3 +64,4 @@ Abaixo uma lista de informações relevantes para iniciar o projeto:
 
 - [Pipeline](Orientações para gerar versão para produção)
 
+# criando uma index.html
