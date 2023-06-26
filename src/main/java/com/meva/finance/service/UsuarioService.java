@@ -40,8 +40,9 @@ public class UsuarioService {
         usuarioOptional.ifPresent(usuario -> usuarioRepository.delete(usuario));
     }
 
-    public void alterar(String cpf, UsuarioDto usuarioDto) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(cpf);
+    public void alterar(UsuarioDto usuarioDto) {
+        Usuario usuario = usuarioDto.convert();
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuario.getCpf());
 
         if (usuarioOptional.isPresent()) {
             salva(usuarioDto);

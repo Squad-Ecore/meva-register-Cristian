@@ -109,16 +109,4 @@ public class Usuario {
         this.family = family;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "cpf='" + cpf + '\'' +
-                ", name='" + name + '\'' +
-                ", genre=" + genre +
-                ", birth=" + birth +
-                ", state='" + state + '\'' +
-                ", city='" + city + '\'' +
-                ", family=" + family +
-                '}';
-    }
 }

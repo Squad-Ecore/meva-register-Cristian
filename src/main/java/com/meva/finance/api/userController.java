@@ -30,11 +30,11 @@ public class userController {
     }
 
 
-    @PutMapping(value = "/update/{cpf}")
+    @PutMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable String cpf, @RequestBody UsuarioDto usuarioDto) {
+    public void update(@RequestBody UsuarioDto usuarioDto) {
 
-        usuarioService.alterar(cpf, usuarioDto);
+        usuarioService.alterar(usuarioDto);
     }
 
 }

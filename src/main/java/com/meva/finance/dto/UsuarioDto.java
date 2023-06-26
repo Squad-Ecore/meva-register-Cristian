@@ -1,7 +1,6 @@
 package com.meva.finance.dto;
 
 import com.meva.finance.entity.Usuario;
-
 import java.time.LocalDate;
 
 public class UsuarioDto {
