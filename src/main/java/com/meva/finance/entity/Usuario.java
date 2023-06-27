@@ -19,7 +19,7 @@ public class Usuario {
     private String name;
 
     @Column(nullable = false)
-    @Size(max = 1)
+
     private char genre;
 
     @Column(nullable = false)
