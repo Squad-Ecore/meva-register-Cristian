@@ -9,6 +9,7 @@ import com.meva.finance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,11 +51,23 @@ public class UsuarioService {
     }
 
 
-//    private void listaFamilyId(Integer id) {
-//        Optional<Family> familyOptional = familyRepository.findById(id);
+    private void listaFamilyId(Integer id) {
+        Optional<Family> familyOptional = familyRepository.findById(id);
+
+        familyOptional.ifPresent(family -> familyRepository.findById(id));
+
+
+
+    }
+
+//    public List<UsuarioDto> listUsuario(){
 //
-//        if (familyOptional.isPresent()) {
-//            throw new IllegalArgumentException("Family nao encontrada");
-//        }
+//
+//        usuarioRepository.findAll();
+//        return listUsuario();
+//    }
+//
+//    private List<Usuario> listUsuarios(){
+//        return usuarioRepository.findAll();
 //    }
 }
