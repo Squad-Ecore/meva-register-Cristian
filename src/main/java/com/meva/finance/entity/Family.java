@@ -22,6 +22,11 @@ public class Family {
     public Family() {
     }
 
+    public Family(String descricao, List<Usuario> usuarios) {
+        this.descricao = descricao;
+        this.usuarios = usuarios;
+    }
+
     public Family(String descricao) {
         this.descricao = descricao;
     }
@@ -42,5 +47,11 @@ public class Family {
         this.descricao = descricao;
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
 
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }
