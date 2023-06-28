@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/usuario")
@@ -20,7 +20,7 @@ public class userController {
     private UsuarioService usuarioService;
 
     @PostMapping(value = "/salvar")
-    public ResponseEntity<UsuarioResponse> save(@RequestBody UsuarioRequest usuarioRequest) {
+    public ResponseEntity<UsuarioResponse> save(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         Usuario user = usuarioService.save(usuarioRequest);
         UsuarioResponse response = new UsuarioResponse(user);
 
@@ -45,10 +45,4 @@ public class userController {
     }
 
 
-    @GetMapping(value = "/lista")
-    public ResponseEntity<List<UsuarioRequest>> findAllUser() {
-        List<UsuarioRequest> list = usuarioService.findAllUser();
-
-        return ResponseEntity.ok().body(list);
-    }
 }

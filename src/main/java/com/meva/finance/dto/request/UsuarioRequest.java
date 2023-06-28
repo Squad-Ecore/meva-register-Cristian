@@ -3,27 +3,41 @@ package com.meva.finance.dto.request;
 import com.meva.finance.dto.request.FamilyRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class UsuarioRequest {
+public class UsuarioRequest implements Serializable {
 
-//    private FamilyDto familyDto;
-
+    @CPF
     private String cpf;
+
+    @Size(max = 255, message = "maximo de 255 caracteres")
+    @NotBlank(message = "Campo obrigatorio")
     private String name;
+
+//    @Pattern(regexp = "[MF]")
     private char genre;
+
+    @Past(message = "Apenas data de nascimento")
     private LocalDate birth;
+
+    @Size(max = 100, message = "maximo de 100 caracteres")
+    @NotEmpty(message = "Campo requirido")
     private String state;
+
+    @Size(max = 100, message = "maximo de 100 caracteres")
+    @NotEmpty(message = "Campo requirido")
     private String city;
+
     private FamilyRequest familyRequest;
 
     public UsuarioRequest() {
     }
 
     public Usuario convert(Usuario usuario) {
-//        Usuario usuario = new Usuario();
-
         usuario.setCpf(cpf);
         usuario.setName(name);
         usuario.setGenre(genre);

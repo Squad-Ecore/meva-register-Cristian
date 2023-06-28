@@ -63,33 +63,6 @@ public class UsuarioService {
 
     }
 
-//    public List<UsuarioDto> findAll() {
-//        List<Usuario> listuser = usuarioRepository.findAll();
-//
-//        List<UsuarioDto> listDto = new ArrayList<>();
-//
-////        return user.stream().map(UsuarioDto::new).collect(Collectors.toList());
-//
-//        for (Usuario user: listuser){
-//            listDto.add(new UsuarioDto(user));
-//        }
-//        return listDto;
-//    }
 
 
-    // Tentando fazer uma lista de usuarios, convertendo a Request para usuarios.findAll
-
-    public List<UsuarioRequest> findAllUser() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-
-        List<UsuarioRequest> listDto = new ArrayList<>();
-
-        for (Usuario usuario : usuarios) {
-            UsuarioRequest usuarioRequest = new UsuarioRequest();
-
-        }
-
-        return listDto;
-
-    }
 }
