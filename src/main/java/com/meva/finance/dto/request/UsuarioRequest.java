@@ -1,11 +1,12 @@
-package com.meva.finance.dto;
+package com.meva.finance.dto.request;
 
+import com.meva.finance.dto.request.FamilyRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
 
 import java.time.LocalDate;
 
-public class UsuarioDto {
+public class UsuarioRequest {
 
 //    private FamilyDto familyDto;
 
@@ -15,13 +16,13 @@ public class UsuarioDto {
     private LocalDate birth;
     private String state;
     private String city;
-    private FamilyDto familyDto;
+    private FamilyRequest familyRequest;
 
-    public UsuarioDto() {
+    public UsuarioRequest() {
     }
 
-    public Usuario convert() {
-        Usuario usuario = new Usuario();
+    public Usuario convert(Usuario usuario) {
+//        Usuario usuario = new Usuario();
 
         usuario.setCpf(cpf);
         usuario.setName(name);
@@ -29,7 +30,7 @@ public class UsuarioDto {
         usuario.setBirth(birth);
         usuario.setState(state);
         usuario.setCity(city);
-        usuario.setFamily(familyDto.convert());
+        usuario.setFamily(familyRequest.convert(new Family()));
 
         return usuario;
     }
@@ -83,11 +84,11 @@ public class UsuarioDto {
         this.city = city;
     }
 
-    public FamilyDto getFamilyDto() {
-        return familyDto;
+    public FamilyRequest getFamilyDto() {
+        return familyRequest;
     }
 
-    public void setFamilyDto(FamilyDto familyDto) {
-        this.familyDto = familyDto;
+    public void setFamilyDto(FamilyRequest familyRequest) {
+        this.familyRequest = familyRequest;
     }
 }

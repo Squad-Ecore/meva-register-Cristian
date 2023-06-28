@@ -1,22 +1,23 @@
-package com.meva.finance.dto;
+package com.meva.finance.dto.request;
 
 import com.meva.finance.entity.Family;
 
-public class FamilyDto {
+public class FamilyRequest {
 
     private Integer id;
     private String descricao;
 
-    public FamilyDto() {
+    public FamilyRequest() {
     }
 
-    public FamilyDto(Family family){
+    public FamilyRequest(Family family){
         this.id = family.getId();
         this.descricao = family.getDescricao();
     }
 
-    public Family convert() {
-        Family family = new Family();
+    public Family convert(Family family) {
+//        Family family = new Family();
+
         family.setId(this.id);
         family.setDescricao(this.descricao);
 

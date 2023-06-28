@@ -2,6 +2,7 @@ package com.meva.finance.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "family")
@@ -53,5 +54,18 @@ public class Family {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Family family = (Family) o;
+        return Objects.equals(id, family.id) && Objects.equals(descricao, family.descricao) && Objects.equals(usuarios, family.usuarios);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, descricao, usuarios);
     }
 }

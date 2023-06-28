@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_meva")
@@ -109,4 +110,16 @@ public class Usuario {
         this.family = family;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return genre == usuario.genre && Objects.equals(cpf, usuario.cpf) && Objects.equals(name, usuario.name) && Objects.equals(birth, usuario.birth) && Objects.equals(state, usuario.state) && Objects.equals(city, usuario.city) && Objects.equals(family, usuario.family);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cpf, name, genre, birth, state, city, family);
+    }
 }

@@ -1,7 +1,7 @@
 package com.meva.finance.service;
 
-import com.meva.finance.dto.FamilyDto;
-import com.meva.finance.dto.UsuarioDto;
+import com.meva.finance.dto.request.FamilyRequest;
+import com.meva.finance.dto.request.UsuarioRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
 import com.meva.finance.repository.FamilyRepository;
@@ -9,6 +9,7 @@ import com.meva.finance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,17 +22,16 @@ public class UsuarioService {
     private FamilyRepository familyRepository;
 
 
-    public void salva(UsuarioDto usuarioDto) {
+    public Usuario save(UsuarioRequest usuarioRequest) {
 
-        if (usuarioDto.getFamilyDto() != null) {
-            FamilyDto familyDto = usuarioDto.getFamilyDto();
-            usuarioDto.setFamilyDto(familyDto);
+        if (usuarioRequest.getFamilyDto() != null) {
+            FamilyRequest familyRequest = usuarioRequest.getFamilyDto();
+            usuarioRequest.setFamilyDto(familyRequest);
 
-            familyRepository.save(familyDto.convert());
+            familyRepository.save(familyRequest.convert(new Family()));
         }
-        Usuario usuario = usuarioDto.convert();
 
-        usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
     }
 
     public void deleteId(String cpf) {
@@ -41,13 +41,17 @@ public class UsuarioService {
         usuarioOptional.ifPresent(usuario -> usuarioRepository.delete(usuario));
     }
 
-    public void alterar(UsuarioDto usuarioDto) {
-        Usuario usuario = usuarioDto.convert();
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuario.getCpf());
+    public Usuario update(UsuarioRequest usuarioRequest) {
+        Usuario usuario = usuarioRequest.convert(new Usuario());
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioRequest.getCpf());
 
         if (usuarioOptional.isPresent()) {
-            salva(usuarioDto);
+            Usuario userPresent = usuarioOptional.get();
+
+            return save(usuarioRequest);
         }
+
+        return usuario;
     }
 
 
@@ -57,17 +61,35 @@ public class UsuarioService {
         familyOptional.ifPresent(family -> familyRepository.findById(id));
 
 
-
     }
 
-//    public List<UsuarioDto> listUsuario(){
+//    public List<UsuarioDto> findAll() {
+//        List<Usuario> listuser = usuarioRepository.findAll();
 //
+//        List<UsuarioDto> listDto = new ArrayList<>();
 //
-//        usuarioRepository.findAll();
-//        return listUsuario();
+////        return user.stream().map(UsuarioDto::new).collect(Collectors.toList());
+//
+//        for (Usuario user: listuser){
+//            listDto.add(new UsuarioDto(user));
+//        }
+//        return listDto;
 //    }
-//
-//    private List<Usuario> listUsuarios(){
-//        return usuarioRepository.findAll();
-//    }
+
+
+    // Tentando fazer uma lista de usuarios, convertendo a Request para usuarios.findAll
+
+    public List<UsuarioRequest> findAllUser() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+
+        List<UsuarioRequest> listDto = new ArrayList<>();
+
+        for (Usuario usuario : usuarios) {
+            UsuarioRequest usuarioRequest = new UsuarioRequest();
+
+        }
+
+        return listDto;
+
+    }
 }
