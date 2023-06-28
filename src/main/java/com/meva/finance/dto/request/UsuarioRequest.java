@@ -1,10 +1,13 @@
 package com.meva.finance.dto;
 
+import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
+
 import java.time.LocalDate;
 
 public class UsuarioDto {
 
+//    private FamilyDto familyDto;
 
     private String cpf;
     private String name;

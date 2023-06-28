@@ -10,6 +10,11 @@ public class FamilyDto {
     public FamilyDto() {
     }
 
+    public FamilyDto(Family family){
+        this.id = family.getId();
+        this.descricao = family.getDescricao();
+    }
+
     public Family convert() {
         Family family = new Family();
         family.setId(this.id);
