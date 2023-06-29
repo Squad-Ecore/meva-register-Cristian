@@ -32,3 +32,6 @@ logging:
 # Server configuration
 server:
   port: 8080 #set your port
+  error:
+    include-exception: true
+

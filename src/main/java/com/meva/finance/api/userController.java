@@ -37,7 +37,7 @@ public class userController {
 
     @PutMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UsuarioResponse> update(@RequestBody UsuarioRequest usuarioRequest) {
+    public ResponseEntity<UsuarioResponse> update(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         Usuario user = usuarioService.update(usuarioRequest);
         UsuarioResponse response = new UsuarioResponse(user);
 

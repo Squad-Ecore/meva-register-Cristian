@@ -4,8 +4,9 @@ import com.meva.finance.entity.Family;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class FamilyRequest {
+public class FamilyRequest implements Serializable {
 
     private Integer id;
 

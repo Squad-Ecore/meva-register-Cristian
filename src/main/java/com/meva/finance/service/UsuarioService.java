@@ -59,8 +59,6 @@ public class UsuarioService {
         Optional<Family> familyOptional = familyRepository.findById(id);
 
         familyOptional.ifPresent(family -> familyRepository.findById(id));
-
-
     }
 
 
