@@ -11,25 +11,25 @@ import java.time.LocalDate;
 
 public class UsuarioRequest implements Serializable {
 
-    @CPF
+//    @CPF
     private String cpf;
 
-    @Size(max = 255, message = "maximo de 255 caracteres")
-    @NotBlank(message = "Campo obrigatorio")
+//    @Size(max = 255, message = "maximo de 255 caracteres")
+//    @NotBlank(message = "Campo obrigatorio")
     private String name;
 
 //    @Pattern(regexp = "[MF]")
     private char genre;
 
-    @Past(message = "Apenas data de nascimento")
+//    @Past(message = "Apenas data de nascimento")
     private LocalDate birth;
-
-    @Size(max = 100, message = "maximo de 100 caracteres")
-    @NotEmpty(message = "Campo requirido")
+//
+//    @Size(max = 100, message = "maximo de 100 caracteres")
+//    @NotEmpty(message = "Campo requirido")
     private String state;
 
-    @Size(max = 100, message = "maximo de 100 caracteres")
-    @NotEmpty(message = "Campo requirido")
+//    @Size(max = 100, message = "maximo de 100 caracteres")
+//    @NotEmpty(message = "Campo requirido")
     private String city;
 
     private FamilyRequest familyRequest;

@@ -9,8 +9,6 @@ import com.meva.finance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,12 +22,19 @@ public class UsuarioService {
 
     public Usuario save(UsuarioRequest usuarioRequest) {
 
+//        validFamily(usuarioRequest.getFamilyDto());
+
+
         if (usuarioRequest.getFamilyDto() != null) {
             FamilyRequest familyRequest = usuarioRequest.getFamilyDto();
             usuarioRequest.setFamilyDto(familyRequest);
 
             familyRepository.save(familyRequest.convert(new Family()));
         }
+
+        FamilyRequest familyRequest = usuarioRequest.getFamilyDto();
+        usuarioRequest.setFamilyDto(familyRequest);
+        familyRepository.save(familyRequest.convert(new Family()));
 
         return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
     }
@@ -62,5 +67,7 @@ public class UsuarioService {
     }
 
 
-
 }
+
+
+

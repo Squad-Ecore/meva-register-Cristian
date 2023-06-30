@@ -2,16 +2,14 @@ package com.meva.finance.dto.request;
 
 import com.meva.finance.entity.Family;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class FamilyRequest implements Serializable {
 
     private Integer id;
 
-    @Size(max = 255, message = "Max de 255 caracteres")
-    @NotBlank(message = "Campo requirido")
+//    @Size(max = 255, message = "Max de 255 caracteres")
+//    @NotBlank(message = "Campo requirido")
     private String descricao;
 
     public FamilyRequest() {
