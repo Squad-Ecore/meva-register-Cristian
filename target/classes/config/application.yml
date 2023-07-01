@@ -32,6 +32,14 @@ logging:
 # Server configuration
 server:
   port: 8080 #set your port
-  error:
-    include-exception: true
+#  error:
+#    include-exception: true
+#  error:
+#server:
+#  error:
+#  include-message: always
+#  include-binding-errors: always
+#  include-stacktrace: on_trace_param
+#  include-exception: false
+
 

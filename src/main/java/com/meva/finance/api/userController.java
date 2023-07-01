@@ -4,7 +4,6 @@ package com.meva.finance.api;
 import com.meva.finance.dto.request.UsuarioRequest;
 import com.meva.finance.dto.response.UsuarioResponse;
 import com.meva.finance.entity.Usuario;
-import com.meva.finance.exception.InvalidFamilyException;
 import com.meva.finance.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,17 +22,11 @@ public class userController {
 
     // Tentar fazer um tratamento de erro com a validação de family
     @PostMapping(value = "/salvar")
-    public ResponseEntity<UsuarioResponse> save(@Valid @RequestBody UsuarioRequest usuarioRequest) {
-        try {
-            Usuario user = usuarioService.save(usuarioRequest);
-            UsuarioResponse response = new UsuarioResponse(user);
-            return ResponseEntity.ok().body(response);
-        } catch (IllegalArgumentException e) {
+    public ResponseEntity<UsuarioResponse> save(@RequestBody @Valid UsuarioRequest usuarioRequest) {
+        Usuario user = usuarioService.save(usuarioRequest);
+        UsuarioResponse response = new UsuarioResponse(user);
 
-            throw new InvalidFamilyException("Teste 1", e.getCause());
-        }
-
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping(value = "/delete/{cpf}")

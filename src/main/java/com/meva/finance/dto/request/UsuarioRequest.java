@@ -1,37 +1,37 @@
 package com.meva.finance.dto.request;
 
-import com.meva.finance.dto.request.FamilyRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
-import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class UsuarioRequest implements Serializable {
 
-//    @CPF
     private String cpf;
 
-//    @Size(max = 255, message = "maximo de 255 caracteres")
-//    @NotBlank(message = "Campo obrigatorio")
+    @NotBlank(message = "nome e sobrenome")
+    @Size(min = 4, max = 100)
     private String name;
 
-//    @Pattern(regexp = "[MF]")
+    //    @Pattern(regexp = "[MF]")
     private char genre;
 
-//    @Past(message = "Apenas data de nascimento")
+    @Past(message = "Apenas data de nascimento")
     private LocalDate birth;
-//
-//    @Size(max = 100, message = "maximo de 100 caracteres")
-//    @NotEmpty(message = "Campo requirido")
+
+    @NotBlank(message = "Apenas o nome do estado")
+    @Size(max = 100)
     private String state;
 
-//    @Size(max = 100, message = "maximo de 100 caracteres")
-//    @NotEmpty(message = "Campo requirido")
+    @NotEmpty(message = "Apenas o nome da cidade")
+    @Size(max = 100)
     private String city;
 
+    @Valid
     private FamilyRequest familyRequest;
 
     public UsuarioRequest() {
@@ -98,11 +98,11 @@ public class UsuarioRequest implements Serializable {
         this.city = city;
     }
 
-    public FamilyRequest getFamilyDto() {
+    public FamilyRequest getFamilyRequest() {
         return familyRequest;
     }
 
-    public void setFamilyDto(FamilyRequest familyRequest) {
+    public void setFamilyRequest(FamilyRequest familyRequest) {
         this.familyRequest = familyRequest;
     }
 }
