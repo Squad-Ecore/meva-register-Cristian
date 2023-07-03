@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class ExceptionHandlerApi {
+public class ExceptionHandlerApi  {
 
 
     @ExceptionHandler(ValidFamilyException.class)
@@ -25,21 +25,22 @@ public class ExceptionHandlerApi {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErroResponse> ValidationExceptionHandler(MethodArgumentNotValidException ex) {
-        List<String> errors = new ArrayList<>();
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<ErroResponse> ValidationExceptionHandler(MethodArgumentNotValidException ex) {
+//        List<String> errors = new ArrayList<>();
+//
+//        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+//            errors.add(error.getDefaultMessage());
+//        }
+//
+//        ErroResponse response = new ErroResponse();
+//        response.setTimestamp(LocalDateTime.now());
+//        response.setStatus(HttpStatus.BAD_REQUEST.value());
+//        response.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+//        response.setMessage("Teste Falha");
+//        response.setErrors(errors);
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//    }
 
-        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            errors.add(error.getDefaultMessage());
-        }
-
-        ErroResponse response = new ErroResponse();
-        response.setTimestamp(LocalDateTime.now());
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
-        response.setMessage("Teste Falha");
-        response.setErrors(errors);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
 }

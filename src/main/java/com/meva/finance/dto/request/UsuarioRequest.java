@@ -32,7 +32,7 @@ public class UsuarioRequest implements Serializable {
     @Size(max = 100, message = "Apenas o nome da cidade")
     private String city;
 
-    @Valid
+//    @Valid
     private FamilyRequest familyRequest;
 
     public UsuarioRequest() {

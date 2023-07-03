@@ -33,6 +33,11 @@ public class UsuarioService {
 //        }
 
         validaFamily(usuarioRequest.getFamilyRequest());
+
+        // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
+        // Se o id > 0, validar se a family existe no BD;
+
+
         FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
         usuarioRequest.setFamilyRequest(familyRequest);
         familyRepository.save(familyRequest.convert(new Family()));
@@ -79,6 +84,8 @@ public class UsuarioService {
         if (familyRequest.getDescricao().isEmpty() ){
             throw new ValidFamilyException("Descricao de family errada");
         }
+
+
     }
 
 }
