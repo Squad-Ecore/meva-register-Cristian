@@ -23,7 +23,6 @@ public class ExceptionHandlerApi {
         FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -40,7 +39,6 @@ public class ExceptionHandlerApi {
         response.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
         response.setMessage("Teste Falha");
         response.setErrors(errors);
-
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

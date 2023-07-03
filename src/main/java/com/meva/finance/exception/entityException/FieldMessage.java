@@ -16,5 +16,4 @@ public class FieldMessage implements Serializable {
     private int status;
     private String message;
 
-
 }

@@ -19,7 +19,6 @@ public class UsuarioRequest implements Serializable {
     @Size(min = 4, max = 100, message = " 'Nome' tem que ser maior que 4 caracteres")
     private String name;
 
-//    @Pattern(regexp = "[MF]")
     private char genre;
 
     @Past(message = "Apenas data de nascimento")
@@ -50,7 +49,6 @@ public class UsuarioRequest implements Serializable {
 
         return usuario;
     }
-
 
     public String getCpf() {
         return cpf;

@@ -34,5 +34,4 @@ public class FamilyRequest implements Serializable {
         return family;
     }
 
-
 }

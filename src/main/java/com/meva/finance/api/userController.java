@@ -20,7 +20,6 @@ public class userController {
     private UsuarioService usuarioService;
 
 
-    // Tentar fazer um tratamento de erro com a validação de family
     @PostMapping(value = "/salvar")
     public ResponseEntity<UsuarioResponse> save(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         Usuario user = usuarioService.save(usuarioRequest);
@@ -36,7 +35,6 @@ public class userController {
         usuarioService.deleteId(cpf);
     }
 
-
     @PutMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UsuarioResponse> update(@Valid @RequestBody UsuarioRequest usuarioRequest) {
@@ -45,6 +43,5 @@ public class userController {
 
         return ResponseEntity.ok().body(response);
     }
-
 
 }

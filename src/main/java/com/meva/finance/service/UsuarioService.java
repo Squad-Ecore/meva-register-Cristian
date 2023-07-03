@@ -25,14 +25,12 @@ public class UsuarioService {
 
     public Usuario save(UsuarioRequest usuarioRequest) {//throws ValidFamilyException {
 
-
 //        if (usuarioRequest.getFamilyRequest() != null){
 //            FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
 //            usuarioRequest.setFamilyRequest(familyRequest);
 //
 //            familyRepository.save(familyRequest.convert(new Family()));
 //        }
-
 
         validaFamily(usuarioRequest.getFamilyRequest());
         FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
@@ -74,8 +72,6 @@ public class UsuarioService {
 //        familyRepository.save(familyRequest.convert(new Family()));
 //    }
 
-
-
     private void validaFamily(FamilyRequest familyRequest){
         if (familyRequest.getId() == null || familyRequest.getId() <=0){
             throw new ValidFamilyException("Algo deu errado com id family");
@@ -83,7 +79,6 @@ public class UsuarioService {
         if (familyRequest.getDescricao().isEmpty() ){
             throw new ValidFamilyException("Descricao de family errada");
         }
-
     }
 
 }
