@@ -22,7 +22,7 @@ public class userController {
 
     // Tentar fazer um tratamento de erro com a validação de family
     @PostMapping(value = "/salvar")
-    public ResponseEntity<UsuarioResponse> save(@RequestBody @Valid UsuarioRequest usuarioRequest) {
+    public ResponseEntity<UsuarioResponse> save(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         Usuario user = usuarioService.save(usuarioRequest);
         UsuarioResponse response = new UsuarioResponse(user);
 

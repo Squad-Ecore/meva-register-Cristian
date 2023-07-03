@@ -2,6 +2,7 @@ package com.meva.finance.dto.request;
 
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -11,24 +12,25 @@ import java.time.LocalDate;
 
 public class UsuarioRequest implements Serializable {
 
+    @CPF
     private String cpf;
 
-    @NotBlank(message = "nome e sobrenome")
-    @Size(min = 4, max = 100)
+    @NotEmpty
+    @Size(min = 4, max = 100, message = " 'Nome' tem que ser maior que 4 caracteres")
     private String name;
 
-    //    @Pattern(regexp = "[MF]")
+//    @Pattern(regexp = "[MF]")
     private char genre;
 
     @Past(message = "Apenas data de nascimento")
     private LocalDate birth;
 
-    @NotBlank(message = "Apenas o nome do estado")
-    @Size(max = 100)
+    @NotEmpty
+    @Size(max = 100, message = "Apenas o nome do estado")
     private String state;
 
-    @NotEmpty(message = "Apenas o nome da cidade")
-    @Size(max = 100)
+    @NotEmpty
+    @Size(max = 100, message = "Apenas o nome da cidade")
     private String city;
 
     @Valid

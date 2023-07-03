@@ -4,7 +4,7 @@ import com.meva.finance.dto.request.FamilyRequest;
 import com.meva.finance.dto.request.UsuarioRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
-import com.meva.finance.exception.error.ValidFamilyException;
+import com.meva.finance.exception.entityException.ValidFamilyException;
 import com.meva.finance.repository.FamilyRepository;
 import com.meva.finance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +23,33 @@ public class UsuarioService {
     private FamilyRepository familyRepository;
 
 
-    public Usuario save(UsuarioRequest usuarioRequest) {
+    public Usuario save(UsuarioRequest usuarioRequest) {//throws ValidFamilyException {
 
-        FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
-        validFamily(usuarioRequest.getFamilyRequest());
 
-//        if (usuarioRequest.getFamilyRequest() != null) {
-        usuarioRequest.setFamilyRequest(familyRequest);
-
+//        if (usuarioRequest.getFamilyRequest() != null){
+//            FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
+//            usuarioRequest.setFamilyRequest(familyRequest);
+//
 //            familyRepository.save(familyRequest.convert(new Family()));
 //        }
 
-        return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
 
+        validaFamily(usuarioRequest.getFamilyRequest());
+        FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
+        usuarioRequest.setFamilyRequest(familyRequest);
+        familyRepository.save(familyRequest.convert(new Family()));
+//        validFamily(usuarioRequest.getFamilyRequest());
+
+        return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
     }
 
     public void deleteId(String cpf) {
-
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(cpf);
 
         usuarioOptional.ifPresent(usuario -> usuarioRepository.delete(usuario));
     }
 
-    public Usuario update(UsuarioRequest usuarioRequest) {
+    public Usuario update(UsuarioRequest usuarioRequest){ //throws ValidFamilyException {
         Usuario usuario = usuarioRequest.convert(new Usuario());
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioRequest.getCpf());
 
@@ -59,22 +63,29 @@ public class UsuarioService {
     }
 
 
-    private void listaFamilyId(Integer id) {
-        Optional<Family> familyOptional = familyRepository.findById(id);
-
-        familyOptional.ifPresent(family -> familyRepository.findById(id));
-    }
-
     // verifica se familyRequest tem os dados obrigatorios
-    private void validFamily(FamilyRequest familyRequest) {
-        if (familyRequest.getId() == null) {
-            throw new ValidFamilyException("Campo id null");
-        } else if (familyRequest.getDescricao().isEmpty()) {
-            throw new ValidFamilyException("campo descricao vazio");
+//    private void validFamily(FamilyRequest familyRequest) throws ValidFamilyException {
+//        if (familyRequest.getId() == null) {
+//            throw new ValidFamilyException("Campo id null");
+//        } else if (familyRequest.getDescricao().isEmpty()) {
+//            throw new ValidFamilyException("campo descricao vazio");
+//        }
+//
+//        familyRepository.save(familyRequest.convert(new Family()));
+//    }
+
+
+
+    private void validaFamily(FamilyRequest familyRequest){
+        if (familyRequest.getId() == null || familyRequest.getId() <=0){
+            throw new ValidFamilyException("Algo deu errado com id family");
+        }
+        if (familyRequest.getDescricao().isEmpty() ){
+            throw new ValidFamilyException("Descricao de family errada");
         }
 
-        familyRepository.save(familyRequest.convert(new Family()));
     }
+
 }
 
 

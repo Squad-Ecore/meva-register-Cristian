@@ -12,10 +12,10 @@ import java.io.Serializable;
 public class FamilyRequest implements Serializable {
 
     @Positive
-    @NotNull(message = "apenas numeros inteiros")
-    private Integer id;
+    @NotNull(message = "apenas numeros maiores que 0")
+    private Long id;
 
-    @NotBlank(message = "descricao requirida")
+    @NotEmpty(message = "Campo 'descricao' presisa ter um nome de Familia  ")
     @Size(max = 100)
     private String descricao;
 
