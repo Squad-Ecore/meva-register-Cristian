@@ -4,6 +4,7 @@ import com.meva.finance.dto.request.FamilyRequest;
 import com.meva.finance.dto.request.UsuarioRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
+import com.meva.finance.exception.entityException.ValidException;
 import com.meva.finance.exception.entityException.ValidFamilyException;
 import com.meva.finance.repository.FamilyRepository;
 import com.meva.finance.repository.UsuarioRepository;
@@ -17,31 +18,23 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
+    private final UsuarioRepository usuarioRepository;
+    private final FamilyRepository familyRepository;
+
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private FamilyRepository familyRepository;
+    public UsuarioService(UsuarioRepository usuarioRepository, FamilyRepository familyRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.familyRepository = familyRepository;
+    }
 
+    public Usuario save(UsuarioRequest usuarioRequest) {
 
-    public Usuario save(UsuarioRequest usuarioRequest) {//throws ValidFamilyException {
-
-//        if (usuarioRequest.getFamilyRequest() != null){
-//            FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
-//            usuarioRequest.setFamilyRequest(familyRequest);
-//
-//            familyRepository.save(familyRequest.convert(new Family()));
-//        }
 
         validaFamily(usuarioRequest.getFamilyRequest());
-
-        // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
-        // Se o id > 0, validar se a family existe no BD;
 
 
         FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
         usuarioRequest.setFamilyRequest(familyRequest);
-        familyRepository.save(familyRequest.convert(new Family()));
-//        validFamily(usuarioRequest.getFamilyRequest());
 
         return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
     }
@@ -52,7 +45,7 @@ public class UsuarioService {
         usuarioOptional.ifPresent(usuario -> usuarioRepository.delete(usuario));
     }
 
-    public Usuario update(UsuarioRequest usuarioRequest){ //throws ValidFamilyException {
+    public Usuario update(UsuarioRequest usuarioRequest) {
         Usuario usuario = usuarioRequest.convert(new Usuario());
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioRequest.getCpf());
 
@@ -66,29 +59,40 @@ public class UsuarioService {
     }
 
 
-    // verifica se familyRequest tem os dados obrigatorios
-//    private void validFamily(FamilyRequest familyRequest) throws ValidFamilyException {
-//        if (familyRequest.getId() == null) {
-//            throw new ValidFamilyException("Campo id null");
+    // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
+    // Se o id > 0, validar se a family existe no BD;
+
+//    private Family validaFamily(FamilyRequest familyRequest) {
+//        if (familyRequest.getId() == null || familyRequest.getId() == 0) {
+//            throw new ValidFamilyException("id da family está null. Adicione um id valido");
 //        } else if (familyRequest.getDescricao().isEmpty()) {
-//            throw new ValidFamilyException("campo descricao vazio");
+//            throw new ValidFamilyException("Descricao de family vazia");
 //        }
 //
-//        familyRepository.save(familyRequest.convert(new Family()));
+//        return familyRepository.save(familyRequest.convert(new Family()));
 //    }
 
-    private void validaFamily(FamilyRequest familyRequest){
-        if (familyRequest.getId() == null || familyRequest.getId() <=0){
-            throw new ValidFamilyException("Algo deu errado com id family");
+    private Family validaFamily(FamilyRequest familyRequest) {
+        if (familyRequest.getDescricao().isEmpty()) {
+            throw new ValidFamilyException("descricao family esta vazia");
         }
-        if (familyRequest.getDescricao().isEmpty() ){
-            throw new ValidFamilyException("Descricao de family errada");
+//
+
+        // tentar fazer uma validação onde quando o id for nulo ou 0 cria automaticamento um novo usuario;
+
+        Family request;
+        if (familyRequest.getId() == null || familyRequest.getId() == 0) {
+            request = new Family();
+
+        } else {
+            request = familyRepository.findById(familyRequest.getId()).orElseThrow(() -> new ValidFamilyException("Teste"));
         }
 
-
+        return familyRepository.save(familyRequest.convert(request));
     }
-
 }
+
+
 
 
 
