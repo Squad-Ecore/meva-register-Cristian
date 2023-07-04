@@ -2,8 +2,7 @@ package com.meva.finance.dto.request;
 
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.validation.annotation.Validated;
 
@@ -12,10 +11,9 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-
-@Data
-@ToString
-public class UsuarioRequest implements Serializable {
+@Getter
+@Setter
+public class UsuarioRequest {
 
     private String cpf;
     private String name;
@@ -28,14 +26,25 @@ public class UsuarioRequest implements Serializable {
     public UsuarioRequest() {
     }
 
+    public UsuarioRequest(String cpf, String name, char genre, LocalDate birth, String state, String city, FamilyRequest familyRequest) {
+        this.cpf = cpf;
+        this.name = name;
+        this.genre = genre;
+        this.birth = birth;
+        this.state = state;
+        this.city = city;
+        this.familyRequest = familyRequest;
+    }
+
     public Usuario convert(Usuario usuario) {
+//        Usuario usuario = new Usuario();
+
         usuario.setCpf(cpf);
         usuario.setName(name);
         usuario.setGenre(genre);
         usuario.setBirth(birth);
         usuario.setState(state);
         usuario.setCity(city);
-        usuario.setFamily(familyRequest.convert(new Family()));
 
         return usuario;
     }

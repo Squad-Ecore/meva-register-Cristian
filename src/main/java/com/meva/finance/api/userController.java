@@ -26,7 +26,7 @@ public class userController {
         Usuario user = usuarioService.save(usuarioRequest);
         UsuarioResponse response = new UsuarioResponse(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping(value = "/delete/{cpf}")

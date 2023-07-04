@@ -19,37 +19,37 @@ import java.util.List;
 public class ExceptionHandlerApi {
 
 
-    @ExceptionHandler(ValidFamilyException.class)
-    public ResponseEntity<FieldMessage> validFamilyHandler(ValidFamilyException ex) {
-        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-    }
-
-
-    @ExceptionHandler(ValidException.class)
-    public ResponseEntity<FieldMessage> validAllExceptionCustom(ValidException ex) {
-        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-    }
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<ErroResponse> ValidationExceptionHandler(MethodArgumentNotValidException ex) {
-//        List<String> errors = new ArrayList<>();
+//    @ExceptionHandler(ValidFamilyException.class)
+//    public ResponseEntity<FieldMessage> validFamilyHandler(ValidFamilyException ex) {
+//        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 //
-//        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-//            errors.add(error.getDefaultMessage());
-//        }
-//
-//        ErroResponse response = new ErroResponse();
-//        response.setTimestamp(LocalDateTime.now());
-//        response.setStatus(HttpStatus.BAD_REQUEST.value());
-//        response.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
-//        response.setMessage("Teste Falha");
-//        response.setErrors(errors);
-//
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
 //    }
+////
+////
+//    @ExceptionHandler(ValidException.class)
+//    public ResponseEntity<FieldMessage> validAllExceptionCustom(ValidException ex) {
+//        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+//    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErroResponse> ValidationExceptionHandler(MethodArgumentNotValidException ex) {
+        List<String> errors = new ArrayList<>();
+
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            errors.add(error.getDefaultMessage());
+        }
+
+        ErroResponse response = new ErroResponse();
+        response.setTimestamp(LocalDateTime.now());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        response.setMessage("Teste Falha");
+        response.setErrors(errors);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
 }

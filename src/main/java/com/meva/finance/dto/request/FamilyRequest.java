@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class FamilyRequest implements Serializable {
+public class FamilyRequest{
 
     private Long id;
     private String descricao;
@@ -22,10 +22,13 @@ public class FamilyRequest implements Serializable {
     }
 
     public Family convert(Family family) {
+//        Family family = new Family();
+
         family.setId(this.id);
         family.setDescricao(this.descricao);
 
         return family;
     }
+
 
 }
