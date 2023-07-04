@@ -4,7 +4,6 @@ import com.meva.finance.dto.request.FamilyRequest;
 import com.meva.finance.dto.request.UsuarioRequest;
 import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
-import com.meva.finance.exception.entityException.ValidException;
 import com.meva.finance.exception.entityException.ValidFamilyException;
 import com.meva.finance.repository.FamilyRepository;
 import com.meva.finance.repository.UsuarioRepository;
@@ -62,33 +61,40 @@ public class UsuarioService {
     // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
     // Se o id > 0, validar se a family existe no BD;
 
-//    private Family validaFamily(FamilyRequest familyRequest) {
-//        if (familyRequest.getId() == null || familyRequest.getId() == 0) {
-//            throw new ValidFamilyException("id da family está null. Adicione um id valido");
-//        } else if (familyRequest.getDescricao().isEmpty()) {
-//            throw new ValidFamilyException("Descricao de family vazia");
+
+
+
+    // teste não salva family mas ele retorna o erro -TENTAR ARRUMAR
+    private void validaFamily(FamilyRequest familyRequest) {
+        if (familyRequest.getId() == null || familyRequest.getId() == 0) {
+            throw new ValidFamilyException("id da family está null. Adicione um id valido");
+//        } else if (familyRequest.getDescricao().isEmpty() && familyRequest.getDescricao() != familyRepository.equals(familyRequest)) {
+//            saveFamilyVerific(familyRequest);
+        } else {
+            throw new ValidFamilyException("Para criar uma nova family precisa passar um id e descricao valida");
+        }
+//        familyRepository.save(familyRequest.convert(new Family()));
+    }
+
+//    private Family validaFamily(UsuarioRequest usuarioRequest) throws ValidFamilyException {
+//        Long familyId = usuarioRequest.getFamilyRequest().getId();
+//
+//        if (familyId == null) {
+//            throw new ValidFamilyException("id de family é nulo");
+//        } else if (familyRepository.findById(familyId).isPresent() || familyId == 0) {
+//            return familyRepository.save(usuarioRequest.getFamilyRequest().convert(new Family()));
 //        }
 //
-//        return familyRepository.save(familyRequest.convert(new Family()));
+//        throw new ValidFamilyException("não tem family");
 //    }
 
-    private Family validaFamily(FamilyRequest familyRequest) {
-        if (familyRequest.getDescricao().isEmpty()) {
-            throw new ValidFamilyException("descricao family esta vazia");
-        }
-//
 
-        // tentar fazer uma validação onde quando o id for nulo ou 0 cria automaticamento um novo usuario;
+    private void saveFamilyVerific(FamilyRequest familyRequest) {
+        Optional<Family> optionalFamily = familyRepository.findById(familyRequest.getId());
 
-        Family request;
-        if (familyRequest.getId() == null || familyRequest.getId() == 0) {
-            request = new Family();
+        optionalFamily.ifPresent(family -> familyRepository.save(familyRequest.convert(new Family())));
 
-        } else {
-            request = familyRepository.findById(familyRequest.getId()).orElseThrow(() -> new ValidFamilyException("Teste"));
-        }
 
-        return familyRepository.save(familyRequest.convert(request));
     }
 }
 

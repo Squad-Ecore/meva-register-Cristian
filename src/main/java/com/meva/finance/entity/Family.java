@@ -16,10 +16,9 @@ public class Family {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "family_sequence")
-    @SequenceGenerator(name = "family_sequence", sequenceName = "family_seq")
+    @SequenceGenerator(name = "family_sequence", sequenceName = "family_sequence", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
     private String descricao;
 
     @OneToMany(mappedBy = "family")
