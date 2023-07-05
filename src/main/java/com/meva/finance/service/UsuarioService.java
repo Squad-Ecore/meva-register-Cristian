@@ -29,16 +29,14 @@ public class UsuarioService {
     }
 
     public Usuario save(UsuarioRequest usuarioRequest) throws ValidFamilyException {
-
         FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
-//        usuarioRequest.setFamilyRequest(familyRequest);
-
-        familyValid(familyRequest);
 
         findCpfUser(usuarioRequest);
 
-        return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
+        Usuario user = usuarioRequest.convert(new Usuario());
+        user.setFamily(familyValid(familyRequest));
 
+        return usuarioRepository.save(user);
     }
 
     public void deleteId(String cpf) {
@@ -60,38 +58,22 @@ public class UsuarioService {
         return usuario;
     }
 
-
     // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
     // Se o id > 0, validar se a family existe no BD;
-
-//    private void familyValid(FamilyRequest familyRequest) {
-//        Long idFamily = familyRequest.getId();
-//
-//        if (idFamily == null || idFamily == 0) {
-//            throw new ValidFamilyException("ID null");
-//        } else {
-//            Optional<Family> existFamily = familyRepository.findById(idFamily);
-//            if (!existFamily.isPresent()) {
-//                Family family = familyRequest.convert(new Family());
-//                familyRepository.save(family);
-//
-//            }
-//        }
-//    }
-
-    private void familyValid(FamilyRequest familyRequest) {
+    
+    private Family familyValid(FamilyRequest familyRequest) {
         Long idFamily = familyRequest.getId();
 
-        if (idFamily == null || idFamily == 0) {
-            throw new ValidFamilyException("Erro -> Id ");
-        } else if (familyRequest.getDescricao().isEmpty()) {
-            throw new ValidFamilyException("Erro -> descricao");
-        } else {
-
+        if (idFamily == null || idFamily == 0 || familyRepository.existsById(idFamily)) {
             Family family = familyRequest.convert(new Family());
-            familyRepository.save(family);
+
+            return familyRepository.save(family);
         }
 
+        if (familyRequest.getDescricao().isEmpty()) {
+            throw new ValidFamilyException("Erro -> descricao");
+        }
+        throw new ValidFamilyException("id não encontrado no banco de dados");
     }
 
     private void findCpfUser(UsuarioRequest usuarioRequest) {

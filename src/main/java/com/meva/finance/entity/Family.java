@@ -15,9 +15,9 @@ public class Family {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//, generator = "family_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "family_id_seq")
+    @SequenceGenerator(name = "family_id_seq", sequenceName = "family_id_seq", allocationSize = 1)
     private Long id;
-//    @SequenceGenerator(name = "family_sequence", sequenceName = "family_sequence", allocationSize = 1)
 
     private String descricao;
 

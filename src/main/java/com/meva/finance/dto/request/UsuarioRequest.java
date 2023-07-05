@@ -44,7 +44,6 @@ public class UsuarioRequest {
         usuario.setBirth(birth);
         usuario.setState(state);
         usuario.setCity(city);
-        usuario.setFamily(familyRequest.convert(new Family()));
 
         return usuario;
     }
