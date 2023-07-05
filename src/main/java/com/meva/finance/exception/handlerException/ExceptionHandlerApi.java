@@ -19,20 +19,20 @@ import java.util.List;
 public class ExceptionHandlerApi {
 
 
-//    @ExceptionHandler(ValidFamilyException.class)
-//    public ResponseEntity<FieldMessage> validFamilyHandler(ValidFamilyException ex) {
-//        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    @ExceptionHandler(ValidFamilyException.class)
+    public ResponseEntity<FieldMessage> validFamilyHandler(ValidFamilyException ex) {
+        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
 //
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-//    }
-////
-////
-//    @ExceptionHandler(ValidException.class)
-//    public ResponseEntity<FieldMessage> validAllExceptionCustom(ValidException ex) {
-//        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 //
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-//    }
+    @ExceptionHandler(ValidException.class)
+    public ResponseEntity<FieldMessage> validAllExceptionCustom(ValidException ex) {
+        FieldMessage message = new FieldMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErroResponse> ValidationExceptionHandler(MethodArgumentNotValidException ex) {

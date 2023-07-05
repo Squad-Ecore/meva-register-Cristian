@@ -1,14 +1,15 @@
 package com.meva.finance.dto.request;
 
 import com.meva.finance.entity.Family;
+import com.meva.finance.repository.FamilyRepository;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
-public class FamilyRequest{
+public class FamilyRequest {
+
 
     private Long id;
     private String descricao;
@@ -22,13 +23,9 @@ public class FamilyRequest{
     }
 
     public Family convert(Family family) {
-//        Family family = new Family();
-
         family.setId(this.id);
         family.setDescricao(this.descricao);
 
         return family;
     }
-
-
 }

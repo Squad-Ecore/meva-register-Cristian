@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,15 +19,21 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
+    private final UsuarioRepository usuarioRepository;
+    private final FamilyRepository familyRepository;
+
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private FamilyRepository familyRepository;
+    public UsuarioService(UsuarioRepository usuarioRepository, FamilyRepository familyRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.familyRepository = familyRepository;
+    }
 
+    public Usuario save(UsuarioRequest usuarioRequest) throws ValidFamilyException {
 
-    public Usuario save(UsuarioRequest usuarioRequest) throws ValidFamilyException{
+        FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
+//        usuarioRequest.setFamilyRequest(familyRequest);
 
-        validFamily(usuarioRequest);
+        familyValid(familyRequest);
 
         return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
 
@@ -55,17 +62,32 @@ public class UsuarioService {
     // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
     // Se o id > 0, validar se a family existe no BD;
 
-    private Family validFamily(UsuarioRequest usuarioRequest){
-        Long familyId = usuarioRequest.getFamilyRequest().getId();
+//    private void familyValid(FamilyRequest familyRequest) {
+//        Long idFamily = familyRequest.getId();
+//
+//        if (idFamily == null || idFamily == 0) {
+//            throw new ValidFamilyException("ID null");
+//        } else {
+//            Optional<Family> existFamily = familyRepository.findById(idFamily);
+//            if (!existFamily.isPresent()) {
+//                Family family = familyRequest.convert(new Family());
+//                familyRepository.save(family);
+//
+//            }
+//        }
+//    }
 
-        if (Objects.isNull(familyId)){
-            throw new ValidFamilyException("id de family esta nulo");
+    private void familyValid(FamilyRequest familyRequest) {
+        Long idFamily = familyRequest.getId();
 
+        if (idFamily == null || idFamily == 0) {
+            throw new ValidFamilyException("Erro -> Id ");
+        } else if (familyRequest.getDescricao().isEmpty()) {
+            throw new ValidFamilyException("Erro -> descricao");
         } else {
-            FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
-            usuarioRequest.setFamilyRequest(familyRequest);
 
-            return familyRepository.save(usuarioRequest.getFamilyRequest().convert(new Family()));
+            Family family = familyRequest.convert(new Family());
+            familyRepository.save(family);
         }
 
     }
