@@ -35,6 +35,8 @@ public class UsuarioService {
 
         familyValid(familyRequest);
 
+        findCpfUser(usuarioRequest);
+
         return usuarioRepository.save(usuarioRequest.convert(new Usuario()));
 
     }
@@ -90,6 +92,13 @@ public class UsuarioService {
             familyRepository.save(family);
         }
 
+    }
+
+    private void findCpfUser(UsuarioRequest usuarioRequest) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioRequest.getCpf());
+        if (usuarioOptional.isPresent()) {
+            throw new ValidFamilyException("Cpf de usuario já está cadastrado");
+        }
     }
 }
 
