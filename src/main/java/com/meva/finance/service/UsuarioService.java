@@ -9,13 +9,10 @@ import com.meva.finance.repository.FamilyRepository;
 import com.meva.finance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 
-@Transactional
 @Service
 public class UsuarioService {
 
@@ -45,24 +42,27 @@ public class UsuarioService {
         usuarioOptional.ifPresent(usuario -> usuarioRepository.delete(usuario));
     }
 
-    public Usuario update(UsuarioRequest usuarioRequest) {
-        Usuario usuario = usuarioRequest.convert(new Usuario());
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioRequest.getCpf());
+    public Usuario update(UsuarioRequest usuarioRequest) throws ValidFamilyException {
+        Optional<Usuario> userOpt = usuarioRepository.findById(usuarioRequest.getCpf());
 
-        if (usuarioOptional.isPresent()) {
-            Usuario userPresent = usuarioOptional.get();
+        if (userOpt.isPresent()) {
+            FamilyRequest familyRequest = usuarioRequest.getFamilyRequest();
 
-            return save(usuarioRequest);
+            Usuario user = usuarioRequest.convert(new Usuario());
+            user.setFamily(familyValid(familyRequest));
+
+
+            return usuarioRepository.save(user);
         }
-
-        return usuario;
+        throw new ValidFamilyException("Algo deu errado no update");
     }
+
 
     // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
     // Se o id > 0, validar se a family existe no BD;
-    
+
     private Family familyValid(FamilyRequest familyRequest) {
-        Long idFamily = familyRequest.getId();
+        Integer idFamily = familyRequest.getId();
 
         if (idFamily == null || idFamily == 0 || familyRepository.existsById(idFamily)) {
             Family family = familyRequest.convert(new Family());
@@ -82,9 +82,6 @@ public class UsuarioService {
             throw new ValidFamilyException("Cpf de usuario já está cadastrado");
         }
     }
+
+
 }
-
-
-
-
-

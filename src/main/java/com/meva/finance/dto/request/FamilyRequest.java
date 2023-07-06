@@ -1,23 +1,20 @@
 package com.meva.finance.dto.request;
 
 import com.meva.finance.entity.Family;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FamilyRequest {
 
-    private Long id;
+    private Integer id;
     private String descricao;
 
-    public FamilyRequest() {
-    }
-
-    public FamilyRequest(Family family) {
-        this.id = family.getId();
-        this.descricao = family.getDescricao();
-    }
 
     public Family convert(Family family) {
         family.setId(this.id);

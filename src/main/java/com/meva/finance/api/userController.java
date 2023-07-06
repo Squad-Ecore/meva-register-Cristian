@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/usuario")
@@ -38,7 +38,7 @@ public class userController {
 
     @PutMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UsuarioResponse> update(@RequestBody UsuarioRequest usuarioRequest) {
+    public ResponseEntity<UsuarioResponse> update(@RequestBody UsuarioRequest usuarioRequest) throws ValidFamilyException {
         Usuario user = usuarioService.update(usuarioRequest);
         UsuarioResponse response = new UsuarioResponse(user);
 

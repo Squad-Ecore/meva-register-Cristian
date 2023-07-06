@@ -1,18 +1,17 @@
 package com.meva.finance.dto.request;
 
-import com.meva.finance.entity.Family;
 import com.meva.finance.entity.Usuario;
-import lombok.*;
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.validation.annotation.Validated;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioRequest {
 
     private String cpf;
@@ -23,18 +22,6 @@ public class UsuarioRequest {
     private String city;
     private FamilyRequest familyRequest;
 
-    public UsuarioRequest() {
-    }
-
-    public UsuarioRequest(String cpf, String name, char genre, LocalDate birth, String state, String city, FamilyRequest familyRequest) {
-        this.cpf = cpf;
-        this.name = name;
-        this.genre = genre;
-        this.birth = birth;
-        this.state = state;
-        this.city = city;
-        this.familyRequest = familyRequest;
-    }
 
     public Usuario convert(Usuario usuario) {
 
