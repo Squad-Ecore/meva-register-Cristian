@@ -10,7 +10,6 @@ import com.meva.finance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,8 +57,7 @@ public class UsuarioService {
     }
 
 
-    // Validar se o id da family é = 0, se for inserir uma nova family com a descrição enviada
-    // Se o id > 0, validar se a family existe no BD;
+
 
     private Family familyValid(FamilyRequest familyRequest) {
         Integer idFamily = familyRequest.getId();
@@ -69,10 +67,10 @@ public class UsuarioService {
 
             return familyRepository.save(family);
         }
-
         if (familyRequest.getDescricao().isEmpty()) {
             throw new ValidFamilyException("Erro -> descricao");
         }
+
         throw new ValidFamilyException("id não encontrado no banco de dados");
     }
 
