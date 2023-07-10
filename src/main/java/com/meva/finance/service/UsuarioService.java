@@ -56,9 +56,6 @@ public class UsuarioService {
         throw new ValidFamilyException("Algo deu errado no update");
     }
 
-
-
-
     private Family familyValid(FamilyRequest familyRequest) {
         Integer idFamily = familyRequest.getId();
 
